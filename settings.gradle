@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "ADCB Trial"
+rootProject.name = "ADCB Service App"
