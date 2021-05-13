@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">ADCB Service App</string>
+    <string name="logo">Logo</string>
+    <string name="splash_welcome">Welcome to ADCB</string>
+    <string name="powered">Powered by Merit Systems Limited</string>
+    <string name="version">Current Version: 1.0.0.1</string>
+    <string name="about">This is the official Service App for Alcoholic Drinks Control Board(ADCB).</string>
+    <string name="department">Department of Health, Alcoholic Drinks Control Board</string>
+    <string name="board">Alcoholic Drinks Control Board</string>
+    <string name="dahboard_welcome">Welcome to ADCB Service App</string>
+    <string name="meni">Menu</string>
+    <string name="inspection_list_name">Inspection List</string>
+    <string name="license_verification_button_tittle">Start Verification</string>
+    <string name="license_validation_results">Scan the License to Validate</string>
+    <string name="coming_soon">Service Coming Soon!</string>
+</resources>

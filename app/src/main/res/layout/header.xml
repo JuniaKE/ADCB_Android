@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:background="@color/yellow"
+    android:orientation="vertical"
+    android:layout_gravity="top"
+    android:padding="20dp">
+
+    <ImageView
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:src="@drawable/brian" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Brian Koech"
+        android:textStyle="bold"
+        android:textColor="@color/green" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="bkoech@uasingishu.go.ke"
+        android:textColor="@color/black"
+        android:textSize="12dp"/>
+
+
+
+</LinearLayout>

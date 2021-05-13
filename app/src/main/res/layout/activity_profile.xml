@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ProfileActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <TextView
+        android:id="@+id/txtUserID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="0dp"
+        android:text="USER ID: "
+        android:textColor="@color/green"
+        android:textStyle="bold"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.085" />
+
+    <TextView
+        android:id="@+id/txtUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingTop="0dp"
+        android:paddingRight="20dp"
+        android:text="Username: "
+        android:textColor="@color/green"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtUserID"
+        app:layout_constraintVertical_bias="0.021" />
+
+    <TextView
+        android:id="@+id/txtEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="5dp"
+        android:paddingRight="20dp"
+        android:text="Email: "
+        android:textColor="@color/green"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/txtUsername"
+        tools:layout_editor_absoluteX="0dp" />
+    <TextView
+        android:id="@+id/txtPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="5dp"
+        android:paddingRight="20dp"
+        android:text="Phone: "
+        android:textColor="@color/green"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/txtEmail"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+        android:id="@+id/txtLastLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="5dp"
+        android:paddingRight="20dp"
+        android:text="Last Login: "
+        android:textColor="@color/green"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/txtPhone"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="84dp"
+        android:text="Logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtLastLogin" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
