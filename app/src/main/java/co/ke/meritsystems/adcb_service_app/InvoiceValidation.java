@@ -114,7 +114,7 @@ public class InvoiceValidation extends AppCompatActivity {
                 btn_scan.setEnabled(false);
                 // Store the scan serial to the variable serial
                 serial = intentResult.getContents().toString();
-                // Start the query to the api end point
+                // Start the query to the api end point ////
 
                 RequestQueue queue = Volley.newRequestQueue(InvoiceValidation.this);
 
