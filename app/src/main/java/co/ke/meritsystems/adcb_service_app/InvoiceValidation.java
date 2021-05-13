@@ -108,17 +108,17 @@ public class InvoiceValidation extends AppCompatActivity {
             }
 
             else {
+
                 result_title.setText("We are validating Invoice Serial NO: "+intentResult.getContents().toString()+". Please wait");
                 Toast.makeText(this, "We are validating Invoice Serial NO: "+intentResult.getContents().toString()+". Please wait", Toast.LENGTH_SHORT).show();
                 btn_scan.setText("Validating... Please Wait");
                 btn_scan.setEnabled(false);
                 // Store the scan serial to the variable serial
                 serial = intentResult.getContents().toString();
-                // Start the query to the api end point ////
-
+                // Start the query to the api end point
                 RequestQueue queue = Volley.newRequestQueue(InvoiceValidation.this);
 
-                String endpoint = URLs.URL_INVOICE_VALIDATION + serial;
+                String endpoint = "https://licensing.meritsystems.co.ke/api/V1/validations/invoices/"+serial;
 
                 JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, endpoint,null,
                         new Response.Listener<JSONArray>(){
