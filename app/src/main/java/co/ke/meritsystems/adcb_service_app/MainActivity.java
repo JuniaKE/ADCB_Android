@@ -15,7 +15,7 @@ import android.widget.Toast;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
-    private static int SPLASH_SCREEN = 5000;
+    private static final int SPLASH_SCREEN = 5000;
     // Variables
     Animation topAnim, bottomAnim;
     ImageView image;
@@ -44,26 +44,23 @@ public class MainActivity extends AppCompatActivity {
         version.setAnimation(topAnim);
         about.setAnimation(bottomAnim);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                SessionManager sessionManager = new SessionManager(MainActivity.this);
-                HashMap<String, String> userDetails = sessionManager.getUserDetailsFromSession();
+        new Handler().postDelayed(() -> {
+            SessionManager sessionManager = new SessionManager(MainActivity.this);
+            HashMap<String, String> userDetails = sessionManager.getUserDetailsFromSession();
 
-                String name = userDetails.get(SessionManager.KEY_NAME);
-                if (name == null || name.isEmpty()) {
-                    Intent intent = new Intent(MainActivity.this, LoginController.class);
-                    startActivity(intent);
-                    finish();
-                }
-                else {
-                    Intent intent = new Intent(MainActivity.this, DashboardController.class);
-                    startActivity(intent);
-                    finish();
-                    Toast.makeText(MainActivity.this, "Logged in as "+name, Toast.LENGTH_SHORT).show();
-                }
-
+            String name = userDetails.get(SessionManager.KEY_NAME);
+            if (name == null || name.isEmpty()) {
+                Intent intent = new Intent(MainActivity.this, LoginController.class);
+                startActivity(intent);
+                finish();
             }
+            else {
+                Intent intent = new Intent(MainActivity.this, DashboardController.class);
+                startActivity(intent);
+                finish();
+                Toast.makeText(MainActivity.this, "Logged in as "+name, Toast.LENGTH_SHORT).show();
+            }
+
         }, SPLASH_SCREEN);
     }
 }
