@@ -96,8 +96,9 @@ public class LoginController extends AppCompatActivity {
                                 //Create Session
                                 SessionManager sessionManager = new SessionManager(LoginController.this);
                                 sessionManager.createLoginSession(_name, _email, _phone, _userId, _darkMode, _accessToken);
+                                // Start Activity
                                 startActivity(new Intent(getApplicationContext(), DashboardController.class));
-
+                                finish();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

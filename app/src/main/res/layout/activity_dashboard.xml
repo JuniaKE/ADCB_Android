@@ -14,8 +14,8 @@
         <include
             android:id="@+id/toolbar"
             layout="@layout/toolbar"
-            tools:layout_editor_absoluteX="79dp"
-            tools:layout_editor_absoluteY="27dp" />
+            tools:layout_editor_absoluteX="-26dp"
+            tools:layout_editor_absoluteY="0dp" />
 
         <TextView
             android:id="@+id/welcome_dashboard"
@@ -28,6 +28,7 @@
             android:textColor="@color/green"
             android:textSize="15sp"
             android:textStyle="bold"
+            android:paddingLeft="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.141"
             app:layout_constraintStart_toStartOf="parent"

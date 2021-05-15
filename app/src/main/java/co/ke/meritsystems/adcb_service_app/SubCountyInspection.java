@@ -13,8 +13,13 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,13 +38,21 @@ public class SubCountyInspection extends AppCompatActivity {
     }
 
     public void ViewSubCounties(View view){
-        String endpoint = URLs.URL_SUBCOUNTIES;
+        String endpoint = URLs.URL_SUB_COUNTIES;
 
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, endpoint, null, new Response.Listener<JSONArray>() {
+        StringRequest request = new StringRequest(Request.Method.GET, endpoint, new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONArray response) {
-                result.setText(response.toString());
-                Toast.makeText(SubCountyInspection.this, response.toString(), Toast.LENGTH_SHORT).show();
+            public void onResponse(String response) {
+                try {
+                    JSONObject data = new JSONObject(response);
+                    JSONObject subCounties = data.getJSONObject("response");
+
+                    result.setText(subCounties.toString());
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Toast.makeText(SubCountyInspection.this, response, Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override
