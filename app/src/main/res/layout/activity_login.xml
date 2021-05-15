@@ -73,7 +73,7 @@
                     android:id="@+id/txt_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text=""
+                    android:text="rono.sinei@gmail.com"
                     android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -95,7 +95,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
-                    android:text=""
+                    android:text="0792285992"
                     android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
