@@ -10,6 +10,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
     private static int SPLASH_SCREEN = 5000;
@@ -44,9 +47,22 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(MainActivity.this, LoginController.class);
-                startActivity(intent);
-                finish();
+                SessionManager sessionManager = new SessionManager(MainActivity.this);
+                HashMap<String, String> userDetails = sessionManager.getUserDetailsFromSession();
+
+                String name = userDetails.get(SessionManager.KEY_NAME);
+                if (name == null || name.isEmpty()) {
+                    Intent intent = new Intent(MainActivity.this, LoginController.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+                    Intent intent = new Intent(MainActivity.this, DashboardController.class);
+                    startActivity(intent);
+                    finish();
+                    Toast.makeText(MainActivity.this, "Logged in as "+name, Toast.LENGTH_SHORT).show();
+                }
+
             }
         }, SPLASH_SCREEN);
     }

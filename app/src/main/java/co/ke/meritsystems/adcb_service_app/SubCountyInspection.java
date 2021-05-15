@@ -9,17 +9,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,14 +33,8 @@ public class SubCountyInspection extends AppCompatActivity {
     }
 
     public void ViewSubCounties(View view){
-        String endpoint = "https://licensing.meritsystems.co.ke/api/V1/inspections/subcounties/requests";
-//        JSONObject headers = new JSONObject();
-//        try {
-//            //input Email and Password as parameters
-//            headers.put("Authorization", "Bearer " + CommonUtils.getInstance().getSharedPrefString(ServiceConstant.User.TOKEN));
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
+        String endpoint = URLs.URL_SUBCOUNTIES;
+
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, endpoint, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -58,14 +47,18 @@ public class SubCountyInspection extends AppCompatActivity {
                 result.setText(error.toString());
                 Toast.makeText(SubCountyInspection.this, "There was an Error: "+error.toString(), Toast.LENGTH_SHORT).show();
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                SessionManager sessionManager = new SessionManager(SubCountyInspection.this);
+                HashMap<String, String> userDetails = sessionManager.getUserDetailsFromSession();
 
-        int socketTimeout = 30000; // 30 seconds. You can change it
-        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-
-        request.setRetryPolicy(policy);
+                String accesstoken = userDetails.get(SessionManager.KEY_ACCESSTOKEN);
+                headers.put("Authorization", "Bearer " + accesstoken);
+                return headers;
+            }
+        };
         DataServiceDriver.getInstance(SubCountyInspection.this).addToRequestQueue(request);
 
         Toast.makeText(this, "You are viewing Sub Counties", Toast.LENGTH_SHORT).show();

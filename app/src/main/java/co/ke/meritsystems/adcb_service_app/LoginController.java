@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -27,9 +29,10 @@ import java.util.Map;
 
 public class LoginController extends AppCompatActivity {
 
-    String email, password;
     EditText txt_email, txt_password;
     ProgressBar progressBar;
+    TextView data;
+    Button btnLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,19 +42,19 @@ public class LoginController extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         txt_email = (EditText) findViewById(R.id.txt_email);
         txt_password = (EditText) findViewById(R.id.txt_password);
-
+        btnLogin = (Button) findViewById(R.id.btnLogin);
+        data = (TextView) findViewById(R.id.loginResponse);
+        btnLogin.setText("Login");
     }
 
+
     public void UserLogin(View view) {
-  /*      Intent intent = new Intent(LoginController.this, DashboardController.class);
-        startActivity(intent);
-        finish();*/
         //first getting the values
-        final String username = txt_email.getText().toString();
+        final String email = txt_email.getText().toString();
         final String password = txt_password.getText().toString();
 
         //validating inputs
-        if (TextUtils.isEmpty(username)) {
+        if (TextUtils.isEmpty(email)) {
             txt_email.setError("Please enter your email");
             txt_email.requestFocus();
             return;
@@ -63,36 +66,61 @@ public class LoginController extends AppCompatActivity {
             return;
         }
         progressBar.setVisibility(View.VISIBLE);
+        btnLogin.setText("Checking Credentials. Please Wait");
         //if everything is fine
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_LOGIN,
+
+        StringRequest loginRequest = new StringRequest(Request.Method.POST, URLs.URL_LOGIN,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         progressBar.setVisibility(View.GONE);
-                        System.out.println(" SERVER RESPONSE " + response);
                         if (response != null) {
-                            startActivity(new Intent(getApplicationContext(), DashboardController.class));
-                        } else {
-                            Toast.makeText(getApplicationContext(), "No response was received from server", Toast.LENGTH_SHORT).show();
+                            //Create user Data
+                            String _userId = "";
+                            String _name = "";
+                            String _email = "";
+                            String _phone = "";
+                            String _darkMode = "";
+                            String _accessToken = "";
+                            try {
+                                JSONObject responseData = new JSONObject(response);
+
+                                JSONObject userData = responseData.getJSONObject("user");
+                                _userId = userData.getString("id");
+                                _accessToken = userData.getString("access_token");
+                                _name = userData.getString("name");
+                                _email = userData.getString("email");
+                                Toast.makeText(LoginController.this, "Logging in as "+_name, Toast.LENGTH_SHORT).show();
+                                _phone = userData.getString("phone");
+                                Toast.makeText(LoginController.this, "Login Successfully! ", Toast.LENGTH_SHORT).show();
+                                //Create Session
+                                SessionManager sessionManager = new SessionManager(LoginController.this);
+                                sessionManager.createLoginSession(_name, _email, _phone, _userId, _darkMode, _accessToken);
+                                startActivity(new Intent(getApplicationContext(), DashboardController.class));
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
                         }
                     }
-                },
-                new Response.ErrorListener() {
+                    }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         progressBar.setVisibility(View.GONE);
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        btnLogin.setText("Login");
+                        Toast.makeText(getApplicationContext(), error.getMessage().toString(), Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("email", username);
+                params.put("email", email);
                 params.put("password", password);
                 return params;
             }
         };
 
-        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+        DataServiceDriver.getInstance(this).addToRequestQueue(loginRequest);
     }
 }

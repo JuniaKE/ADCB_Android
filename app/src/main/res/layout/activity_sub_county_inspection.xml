@@ -14,12 +14,14 @@
         android:id="@+id/btn_sc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="View Counties"
         android:onClick="ViewSubCounties"
+        android:text="View Counties"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.979" />
 
     <TextView
         android:id="@+id/response"

@@ -21,23 +21,5 @@ public class ProfileActivity extends AppCompatActivity {
         txtPhone = (TextView) findViewById(R.id.txtPhone);
 
 
-        //getting the current user
-        User user = SharedPrefManager.getInstance(this).getUser();
-        //setting the values to the text views
-        txtUserID.setText(String.valueOf(user.getId()));
-        txtUsername.setText(user.getName());
-        txtEmail.setText(user.getEmail());
-        txtPhone.setText(user.getPhone());
-        txtLastLogin.setText(user.getLast_login());
-
-        //when the user presses logout button
-        //calling the logout method
-        findViewById(R.id.btnLogout).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                SharedPrefManager.getInstance(getApplicationContext()).logout();
-            }
-        });
     }
 }

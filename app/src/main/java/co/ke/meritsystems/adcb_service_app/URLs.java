@@ -4,6 +4,7 @@ public class URLs {
 
     private static final String ROOT_URL = "https://licensing.meritsystems.co.ke/api/V1/";
     public static final String URL_LOGIN = ROOT_URL + "auth/login";
-    private static final String BASE_URL = "https://licensing.meritsystems.co.ke";
-    public static final String BASE_LOGIN = BASE_URL + "/login";
+    public static final String URL_SUBCOUNTIES = ROOT_URL + "inspections/subcounties";
+
+
 }
