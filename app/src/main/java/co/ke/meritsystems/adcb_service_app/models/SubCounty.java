@@ -2,7 +2,7 @@ package co.ke.meritsystems.adcb_service_app.models;
 
 import java.util.List;
 
-public class Subcounty {
+public class SubCounty {
     public int id;
     public String sub_county_name;
     public int sub_county_requests;

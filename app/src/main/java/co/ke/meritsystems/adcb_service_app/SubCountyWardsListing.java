@@ -1,11 +1,11 @@
 package co.ke.meritsystems.adcb_service_app;
 
+import android.os.Bundle;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Bundle;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -23,42 +23,44 @@ import java.util.List;
 import java.util.Map;
 
 import co.ke.meritsystems.adcb_service_app.adapters.SubCountyAdapter;
+import co.ke.meritsystems.adcb_service_app.adapters.SubCountyWardAdapter;
 import co.ke.meritsystems.adcb_service_app.models.SubCounty;
+import co.ke.meritsystems.adcb_service_app.models.SubCountyWards;
 
-public class SubCountyListing extends AppCompatActivity {
+public class SubCountyWardsListing extends AppCompatActivity {
     RecyclerView recyclerView;
-    SubCountyAdapter adapter;
-    List<SubCounty> subCountyList;
+    SubCountyWardAdapter adapter;
+    List<SubCountyWards> subCountyWardList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sub_county_listing);
-        recyclerView = findViewById(R.id.recyclerView);
+        setContentView(R.layout.activity_sub_county_ward_listing);
+        recyclerView = findViewById(R.id.recyclerViewWards);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        subCountyList = new ArrayList<>();
-        getSubCounties();
+        subCountyWardList = new ArrayList<>();
+        getSubCountyWards();
     }
 
-    private void getSubCounties() {
-        String endpoint = URLs.URL_SUB_COUNTIES;
+    private void getSubCountyWards() {
+        String endpoint = URLs.URL_SUB_COUNTY_WARDS + "?sub_county_id=" + getIntent().getStringExtra("ID");
         StringRequest request = new StringRequest(Request.Method.GET, endpoint, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     JSONObject data = new JSONObject(response);
-                    JSONArray jsonArray = data.getJSONArray("subcounties");
+                    JSONArray jsonArray = data.getJSONArray("wards");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject obj = null;
                         obj = jsonArray.getJSONObject(i);
-                        SubCounty subcounty = new SubCounty();
+                        SubCountyWards subcounty = new SubCountyWards();
                         subcounty.setId(obj.getInt("id"));
-                        subcounty.setSub_county_name(obj.getString("sub_county_name"));
-                        subcounty.setSub_county_requests(obj.getInt("sub_county_requests"));
-                        subCountyList.add(subcounty);
+                        subcounty.setWard_name(obj.getString("ward_name"));
+                        subcounty.setWard_request_count(obj.getInt("ward_request_count"));
+                        subCountyWardList.add(subcounty);
                     }
-                    adapter = new SubCountyAdapter(subCountyList, getApplicationContext());
+                    adapter = new SubCountyWardAdapter(subCountyWardList, getApplicationContext());
                     recyclerView.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -67,19 +69,20 @@ public class SubCountyListing extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(SubCountyListing.this, "There was an Error: " + error.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SubCountyWardsListing.this, "There was an Error: " + error.toString(), Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
-                SessionManager sessionManager = new SessionManager(SubCountyListing.this);
+                SessionManager sessionManager = new SessionManager(SubCountyWardsListing.this);
                 HashMap<String, String> userDetails = sessionManager.getUserDetailsFromSession();
+                //headers.put("sub_county_id", getIntent().getStringExtra("ID"));
                 String accesstoken = userDetails.get(SessionManager.KEY_ACCESSTOKEN);
                 headers.put("Authorization", "Bearer " + accesstoken);
                 return headers;
             }
         };
-        DataServiceDriver.getInstance(SubCountyListing.this).addToRequestQueue(request);
+        DataServiceDriver.getInstance(SubCountyWardsListing.this).addToRequestQueue(request);
     }
 }

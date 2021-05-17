@@ -1,7 +1,5 @@
 package co.ke.meritsystems.adcb_service_app;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +9,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.HashMap;
 
@@ -38,12 +38,14 @@ public class MainActivity extends AppCompatActivity {
         version = findViewById(R.id.version);
 
         //Set Animations
-        image.setAnimation(topAnim);
-        welcome.setAnimation(bottomAnim);
-        powered.setAnimation(topAnim);
-        version.setAnimation(topAnim);
-        about.setAnimation(bottomAnim);
-
+        if (bottomAnim != null || topAnim != null) {
+            image.setAnimation(topAnim);
+            welcome.setAnimation(bottomAnim);
+            powered.setAnimation(topAnim);
+            version.setAnimation(topAnim);
+            about.setAnimation(bottomAnim);
+        }
+        
         new Handler().postDelayed(() -> {
             SessionManager sessionManager = new SessionManager(MainActivity.this);
             HashMap<String, String> userDetails = sessionManager.getUserDetailsFromSession();
@@ -53,12 +55,11 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, LoginController.class);
                 startActivity(intent);
                 finish();
-            }
-            else {
+            } else {
                 Intent intent = new Intent(MainActivity.this, DashboardController.class);
                 startActivity(intent);
                 finish();
-                Toast.makeText(MainActivity.this, "Logged in as "+name, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Logged in as " + name, Toast.LENGTH_SHORT).show();
             }
 
         }, SPLASH_SCREEN);

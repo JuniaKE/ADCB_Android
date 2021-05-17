@@ -18,7 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ADCBServiceApp"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SubCountyListing"></activity>
+        <activity android:name=".BusinessInspection"></activity>
+        <activity android:name=".WardRequestListing" />
+        <activity android:name=".SubCountyListing" />
+        <activity android:name=".SubCountyWardsListing" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".SubCountyInspection" />
         <activity android:name=".InspectionMain" />
